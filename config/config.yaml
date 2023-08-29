@@ -22,3 +22,11 @@ datasets:
       - data
       - mm
       - uf
+
+  output:
+    path: "./data/processed/output"
+    suffix: "csv"
+    separator: ";"
+    header: "uf,ano,mes,chuvas,dengue"
+
+
