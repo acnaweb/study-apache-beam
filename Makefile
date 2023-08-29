@@ -1,5 +1,8 @@
 install:
 	pip install -r requirements.txt
 
-pipeline:
-	python pipeline.py
+run:
+	python main.py
+
+run_local:
+	python main.py	
