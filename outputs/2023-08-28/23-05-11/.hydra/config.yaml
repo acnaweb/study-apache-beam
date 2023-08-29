@@ -1,0 +1,11 @@
+datasets:
+  dengue:
+    path: ./data/raw/casos_dengue.txt
+    separator: x
+    header: id|data_iniSE|casos|ibge_code|cidade|uf|cep|latitude|longitude
+    skip_header_lines: 1
+  chuvas:
+    path: ./data/raw/chuvas.csv
+    separator: ','
+    header: ''
+    skip_header_lines: 1
