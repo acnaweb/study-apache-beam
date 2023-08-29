@@ -2,7 +2,9 @@
 
 ### Datasets
 
-- https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-basedados.rar
+-  https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-basedados.rar
+
+- https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-sampledados.rar
 
 
 ### Issues

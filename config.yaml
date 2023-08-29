@@ -1,6 +1,6 @@
 datasets:
   dengue: 
-    path: "./data/raw/casos_dengue.txt"
+    path: "./data/raw/sample_casos_dengue.txt"
     separator: "|"
     skip_header_lines: 1
     columns: 
@@ -14,7 +14,7 @@ datasets:
       - latitude
       - longitude
   chuvas: 
-    path: "./data/raw/chuvas.csv"
+    path: "./data/raw/sample_chuvas.csv"
     separator: ","
     header: ""
     skip_header_lines: 1
