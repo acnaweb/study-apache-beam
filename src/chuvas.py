@@ -27,6 +27,6 @@ def build_pipeline_chuvas(pipeline, dataset_setup):
         | f"{tag}Add key uf-ano-mes" >> beam.Map(add_key_uf_ano_mes)                
         | f"{tag}Sum 'casos'" >> beam.CombinePerKey(sum)
         | f"{tag}Round results" >> beam.Map(round_mm)
-        | f"{tag}Print" >> beam.Map(print)        
+        # | f"{tag}Print" >> beam.Map(print)        
     )
-    
+    return result

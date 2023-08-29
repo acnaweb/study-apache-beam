@@ -19,8 +19,8 @@ def add_key_uf_ano_mes(element):
       if bool(re.search(r'\d', item["casos"])) == True:
         yield (f"{uf}-{item['ano_mes']}", float(item["casos"]))
       else:
-        yield (f"{uf}-{item['ano_mes']}", 0.0)
-    
+        yield (f"{uf}-{item['ano_mes']}", 0.0)    
+
 
 def build_pipeline_dengue(pipeline, dataset_setup):
   tag = "[dengue]/"
@@ -36,5 +36,7 @@ def build_pipeline_dengue(pipeline, dataset_setup):
       | f"{tag}Group by key uf" >> beam.GroupByKey()
       | f"{tag}Add key uf-ano-mes" >> beam.FlatMap(add_key_uf_ano_mes)
       | f"{tag}Sum 'casos'" >> beam.CombinePerKey(sum)
-      | f"{tag}Print" >> beam.Map(print)        
+      # | f"{tag}Print" >> beam.Map(print)        
   )
+
+  return result
