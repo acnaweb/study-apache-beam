@@ -1,7 +1,0 @@
-datasets:
-  dengue:
-    path: ./data/raw/casos_dengue.txt
-    separator: '|'
-  chuvas:
-    path: ./data/raw/chuvas.csv
-    separator: ','
