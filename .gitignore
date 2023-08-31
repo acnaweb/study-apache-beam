@@ -194,3 +194,4 @@ pyrightconfig.json
 
 outputs/*
 data/*
+credentials/*
