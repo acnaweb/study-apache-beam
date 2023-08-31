@@ -1,5 +1,5 @@
 import apache_beam as beam
-from apache_beam.io import ReadFromText
+from apache_beam.io import ReadFromText, WriteToText
 
 
 def add_key_uf_ano_mes(element):

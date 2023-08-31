@@ -1,8 +1,8 @@
 install:
 	pip install -r requirements.txt
 
-run:
-	python main.py
+run_u:
+	python main.py +jobs=udemy
 
-run_local:
-	python main.py	
+run_a:
+	python main.py +jobs=alura

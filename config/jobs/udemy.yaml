@@ -1,0 +1,12 @@
+id: "pipeline_udemy"
+datasets:
+  poema:
+    path: "./data/raw/voos_sample.csv"
+    separator: ","
+
+
+  output:
+    path: "./data/processed/voos"
+    suffix: "csv"
+    separator: ","
+    header: "uf,ano,mes,chuvas,dengue"

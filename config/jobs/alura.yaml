@@ -1,4 +1,19 @@
+id: "pipeline_alura"
 datasets:
+  voos: 
+    path: "./data/raw/voos_sample.csv"
+    separator: ","
+    skip_header_lines: 0
+    columns: 
+      - id
+      - data_iniSE
+      - casos
+      - ibge_code
+      - cidade
+      - uf
+      - cep
+      - latitude
+      - longitude
   dengue: 
     path: "./data/raw/sample_casos_dengue.txt"
     separator: "|"
