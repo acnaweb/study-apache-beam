@@ -1,0 +1,9 @@
+project: "curso-dataflow-beam-397504"
+topic: "projects/curso-dataflow-beam-397504/topics/voos"
+subscription: "projects/curso-dataflow-beam-397504/subscriptions/pull-sub"
+
+inputs:
+  voos:
+    # file: "./data/raw/voos_sample.csv"
+    file: "./data/raw/voos_sample.csv"
+    separator: ","

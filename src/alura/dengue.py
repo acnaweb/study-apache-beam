@@ -1,7 +1,7 @@
 import apache_beam as beam
 import re
 from apache_beam.io import ReadFromText
-from .utils import list_to_dict
+from ..utils import list_to_dict
 
 
 def add_field_ano_mes(element):

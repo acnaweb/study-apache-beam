@@ -1,0 +1,7 @@
+project: "curso-dataflow-beam-397504"
+topic: "projects/curso-dataflow-beam-397504/topics/voos"
+
+inputs:
+  voos:
+    file: "./data/raw/voos_sample.csv"
+    separator: ","
