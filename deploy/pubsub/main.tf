@@ -1,10 +1,10 @@
-resource "google_pubsub_topic" "demo_topic" {
-    name     = "demo-topic"
+resource "google_pubsub_topic" "study_topic" {
+    name     = "study-topic"
 }
 
-resource "google_pubsub_subscription" "demo_subscription" {
-  name  = "demo-subscription"
-  topic = google_pubsub_topic.demo_topic.name
+resource "google_pubsub_subscription" "study_subscription" {
+  name  = "study-subscription"
+  topic = google_pubsub_topic.study_topic.name
 
   # 20 minutes
   message_retention_duration = "1200s"
