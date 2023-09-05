@@ -1,0 +1,11 @@
+id: "beam"
+
+inputs:
+  voos:
+    file: "./data/raw/voos_sample.csv"    
+    separator: ","
+
+outputs:
+  voos:
+    file: "./data/processed/voos.csv"    
+    header: ""

@@ -1,8 +1,8 @@
 install:
 	pip install -r requirements.dev.txt
 
-run_u:
-	python main.py +jobs=udemy
+run_batch_local:
+	python main.py +batch=voos_beam
 
 run_a:
 	python main.py +jobs=alura
