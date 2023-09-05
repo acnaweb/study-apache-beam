@@ -6,14 +6,17 @@ provider "google" {
 }
 
 module "bucket" {
-  source = "./buckets"
-  name       = "acnaweb-datalake"
+  source = "./bucket"
+  name       = var.bucket_name
   project_id = var.project_id
   region   = var.region
-
-  custom_placement_config = {
-    data_locations : ["us-east1"]
-  }
-
-  iam_members = []
 }
+
+module "pubsub" {
+  source = "./pubsub"  
+}
+
+
+# module "compute" {
+#   source = "./compute"  
+# }

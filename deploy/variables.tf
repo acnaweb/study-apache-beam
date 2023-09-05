@@ -12,3 +12,8 @@ variable "credentials" {
   description = "Path for Google Credentials"
   type = string
 }
+
+variable "bucket_name" {
+  description = "Bucket name"
+  type = string
+}
