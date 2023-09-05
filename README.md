@@ -3,8 +3,27 @@
 
 ### Environment
 
+
+#### Python (Apache Beam credentials)
+
 ```
 export GOOGLE_APPLICATION_CREDENTIALS=/path/google_credentials.json
+```
+or 
+
+.env
+```
+GOOGLE_APPLICATION_CREDENTIALS=/path/google_credentials.json
+```
+
+#### Terraform credentials
+
+deploy/terraform.tfvars
+```
+project_id="dhuodata"
+region="us-west1"
+bucket_name="petrobras-datalake"
+credentials="../credentials/google-credentials.json"
 ```
 
 ### Object Store
@@ -33,8 +52,7 @@ bucket_name/template
 - https://beam.apache.org/documentation/programming-guide/#pcollection-characteristics
 - https://python.plainenglish.io/apache-beam-flink-cluster-kubernetes-python-a1965f37b7cb
 - https://towardsdatascience.com/data-pipelines-with-apache-beam-86cd8eb55fd8
-
-
+- https://blog.marcnuri.com/prometheus-grafana-setup-minikube
 
 
 https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py
@@ -55,3 +73,4 @@ python3 -m \
 ### Terraform
 
 - https://github.com/terraform-google-modules/terraform-google-cloud-storage/tree/v4.0.1/modules/simple_bucket
+
