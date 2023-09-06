@@ -13,7 +13,7 @@ variable "credentials" {
   type = string
 }
 
-variable "bucket_name" {
-  description = "Bucket name"
+variable "prefix" {
+  description = "Prefix for object names"
   type = string
 }

@@ -8,7 +8,7 @@ locals {
 }
 
 resource "google_storage_bucket" "bucket" {
-  name                        = var.name
+  name                        = "${var.prefix}-datalake-demo"
   project                     = var.project_id
   location                    = var.region
   storage_class               = var.storage_class

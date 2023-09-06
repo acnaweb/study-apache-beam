@@ -1,6 +1,6 @@
-variable "name" {
-  description = "The name of the bucket."
-  type        = string
+variable "prefix" {
+  description = "Prefix for object names"
+  type = string
 }
 
 variable "project_id" {
@@ -24,7 +24,6 @@ variable "labels" {
   type        = map(string)
   default     = null
 }
-
 
 variable "bucket_policy_only" {
   description = "Enables Bucket Policy Only access to a bucket."

@@ -1,22 +1,22 @@
 
 locals {
   subscriber_list = [
-      {name: "cloudstorage-ingestion-sub"}, 
-      {name: "bigquery-ingestion-sub"}, 
-      {name: "bigtable-ingestion-sub"}      
+      {name: "cloudstorage-sub"}, 
+      {name: "bigquery-sub"}, 
+      {name: "bigtable-sub"}      
   ]
 }
 
-resource "google_pubsub_topic" "mde_topic" {
-    name     = "petrobras-mde-topic"
+resource "google_pubsub_topic" "topics" {
+    name     = "${var.prefix}-topic-demo"
 }
 
 
 resource "google_pubsub_subscription" "subscriptions" {
   for_each = { for obj in local.subscriber_list : "${obj.name}" => obj }
-  name     = "${each.value.name}/" # Declarin
+  name     = "${each.value.name}/"
 
-  topic = google_pubsub_topic.mde_topic.name
+  topic = google_pubsub_topic.topics.name
 
   # 20 minutes
   message_retention_duration = "1200s"

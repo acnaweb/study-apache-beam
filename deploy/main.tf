@@ -7,16 +7,18 @@ provider "google" {
 
 module "bucket" {
   source = "./bucket"
-  name       = var.bucket_name
+  prefix  = var.prefix
   project_id = var.project_id
   region   = var.region
 }
 
 module "pubsub" {
   source = "./pubsub"  
+  prefix  = var.prefix
 }
 
-
-# module "compute" {
-#   source = "./compute"  
-# }
+module "bigquery" {
+  source = "./bigquery"  
+  region   = var.region
+  prefix  = var.prefix
+}
