@@ -20,10 +20,10 @@ GOOGLE_APPLICATION_CREDENTIALS=/path/google_credentials.json
 
 deploy/terraform.tfvars
 ```
-project_id="dhuodata"
+project_id="study-gcp-398200"
 region="us-west1"
-bucket_name="petrobras-datalake"
-credentials="../credentials/google-credentials.json"
+bucket_name="acnaweb-study-datalake"
+credentials="../credentials/data-ingestion@study-gcp.json"
 ```
 
 ### Object Store
@@ -37,7 +37,7 @@ bucket_name/template
 
 ### Datasets
 
--  https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-basedados.rar
+- https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-basedados.rar
 
 - https://caelum-online-public.s3.amazonaws.com/1954-apachebeam/alura-apachebeam-sampledados.rar
 

@@ -5,7 +5,7 @@ from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import SetupOptions
 
 
-@hydra.main(version_base=None, config_path="../config")
+@hydra.main(version_base=None)
 def run(cfg : DictConfig):   
     pipelineOptions = PipelineOptions(argc=None)    
 

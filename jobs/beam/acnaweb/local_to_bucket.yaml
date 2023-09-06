@@ -7,6 +7,6 @@ inputs:
 
 outputs:
   voos:
-    file: "gs://petrobras-datalake/outputs/voos.csv"        
+    file: "gs://acnaweb-study-datalake/outputs/voos.csv"        
     header: ""
 
