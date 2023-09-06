@@ -1,11 +1,10 @@
+export GOOGLE_APPLICATION_CREDENTIALS=./credentials/sa-petrobras@dhuodata.json
+
 install:
 	pip install -r requirements.dev.txt
 
-run_batch_local:
-	python main.py +batch=voos_beam
-
-run_a:
-	python main.py +jobs=alura
+run_dataflow:
+	python src/batch_dataflow/job.py --config-dir=/home/ac/Projects/study-apache-beam/jobs/dataflow --config-name=ingest_cs_to_cs
 
 show:
 	python main.py --cfg hydra
@@ -15,4 +14,3 @@ publish:
 
 consume:
 	python src/consumer.py	+pubsub=consumer
-	export GOOGLE_APPLICATION_CREDENTIALS=/home/ac/Projects/study-apache-beam/credentials/study-beam-account.json

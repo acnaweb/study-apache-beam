@@ -1,4 +1,4 @@
-id: "beam"
+id: "batch_beam"
 
 inputs:
   voos:

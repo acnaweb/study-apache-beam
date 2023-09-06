@@ -1,10 +1,9 @@
 locals {
   folder_list = [
       {folder: "inputs/"}, 
-      {folder: "outpus/"}, 
+      {folder: "outputs/"}, 
       {folder: "temp/"}, 
       {folder: "template/"}, 
-      {folder: "test/"}, 
   ]
 }
 

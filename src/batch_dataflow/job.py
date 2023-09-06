@@ -1,10 +1,14 @@
+import hydra
 import apache_beam as beam
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam.options.pipeline_options import SetupOptions
 
+@hydra.main(version_base=None)
+def run(cfg : DictConfig):
 
-def create_template(cfg : DictConfig):
+    print(OmegaConf.to_yaml(cfg))
+
     job_template = {
         "project": cfg.dataflow.project,
         "runner": cfg.dataflow.runner,
@@ -12,14 +16,16 @@ def create_template(cfg : DictConfig):
         "staging_location": cfg.dataflow.staging_location,
         "temp_location": cfg.dataflow.temp_location,
         "template_location": cfg.dataflow.template_location,
-        "save_main_session": cfg.dataflow.save_main_session
+        "save_main_session": cfg.dataflow.save_main_session,
+        "subnetwork": cfg.dataflow.subnetwork,
+        "requirements_file": cfg.dataflow.requirements_file
     }
 
     # pipelineOptions = PipelineOptions(argc=None)
     pipelineOptions = PipelineOptions.from_dictionary(job_template)
 
     # Sets the requirements.txt file
-    pipelineOptions.view_as(SetupOptions).requirements_file = "requirements.txt"
+    # pipelineOptions.view_as(SetupOptions).requirements_file = "requirements.txt"
 
     input_file = {
         "file": cfg.inputs.voos.file,
@@ -36,4 +42,7 @@ def create_template(cfg : DictConfig):
         data_as_list = lines | "Split" >> beam.Map(lambda record: record.split(input_file["separator"]))
         output = data_as_list | "Save Output" >> beam.io.WriteToText(output_file["file"], header=output_file["header"])
 
-            
+
+if __name__ == "__main__":
+    run()
+

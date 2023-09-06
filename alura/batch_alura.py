@@ -1,10 +1,10 @@
 import apache_beam as beam
 from omegaconf import DictConfig
 from apache_beam.options.pipeline_options import PipelineOptions
-from .alura.chuvas import build_pipeline_chuvas
-from .alura.dengue import build_pipeline_dengue
-from .alura.join_chuvas_dengue import build_pipeline_join_chuvas_dengue
-from .alura.save import save
+from .chuvas import build_pipeline_chuvas
+from .dengue import build_pipeline_dengue
+from .join_chuvas_dengue import build_pipeline_join_chuvas_dengue
+from .save import save
 
 
 def create_template(cfg : DictConfig):
