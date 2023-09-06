@@ -5,13 +5,13 @@ install:
 
 
 run_beam:
-	python src/pipeline_beam.py --config-name=local_to_local --config-dir=/home/antcarlosd/Projects/study-apache-beam/jobs/beam/acnaweb
+	python src/pipeline_beam.py --config-dir=/home/ac/Projects/study-apache-beam/jobs/beam/acnaweb --config-name=local_to_local 
 
 run_dataflow:
-	python src/pipeline_dataflow.py --config-dir=/home/antcarlosd/Projects/study-apache-beam/jobs/dataflow/acnaweb --config-name=bucket_to_bucket
+	python src/pipeline_dataflow.py --config-dir=/home/ac/Projects/study-apache-beam/jobs/dataflow/acnaweb --config-name=bucket_to_bucket
 
 run_dataflow_bq:
-	python src/pipeline_dataflow_bigquery.py --config-dir=/home/antcarlosd/Projects/study-apache-beam/jobs/dataflow/acnaweb --config-name=bucket_to_bigquery
+	python src/pipeline_dataflow_bigquery.py --config-dir=/home/ac/Projects/study-apache-beam/jobs/dataflow/acnaweb --config-name=bucket_to_bigquery
 
 show:
 	python main.py --cfg hydra
