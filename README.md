@@ -26,6 +26,11 @@ bucket_name="acnaweb-study-datalake"
 credentials="../credentials/data-ingestion@study-gcp.json"
 ```
 
+#### Terraform apply/destroy
+
+terraform destroy -var-file="terraform.dhuodata.tfvars"
+
+
 ### Object Store
 
 ```

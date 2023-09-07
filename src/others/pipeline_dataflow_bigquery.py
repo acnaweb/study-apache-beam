@@ -20,7 +20,7 @@ def run(cfg : DictConfig):
         "temp_location": cfg.dataflow.temp_location,
         "template_location": cfg.dataflow.template_location,
         "save_main_session": cfg.dataflow.save_main_session,
-        # "subnetwork": cfg.dataflow.subnetwork,
+        "subnetwork": cfg.dataflow.subnetwork,
         "requirements_file": cfg.dataflow.requirements_file
     }
 

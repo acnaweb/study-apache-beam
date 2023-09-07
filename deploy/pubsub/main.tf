@@ -23,9 +23,7 @@ resource "google_pubsub_subscription" "subscriptions" {
   retain_acked_messages      = false
   ack_deadline_seconds = 20
 
-  retry_policy {
-    minimum_backoff = "10s"
-  }
-
   enable_message_ordering    = false
 }
+
+

@@ -1,18 +1,15 @@
 import hydra
 import time
 from google.cloud import pubsub_v1
-from dotenv import load_dotenv
 from omegaconf import DictConfig, OmegaConf
 
-load_dotenv()
-
-@hydra.main(version_base=None, config_path="../config")
+@hydra.main(version_base=None)
 def main(cfg : DictConfig): 
     print(OmegaConf.to_yaml(cfg))
 
-    topic = cfg.pubsub.topic
-    input = cfg.pubsub.inputs.voos.file
-    subscription = cfg.pubsub.subscription
+    topic = cfg.topic
+    input = cfg.inputs.voos.file
+    subscription = cfg.subscription
 
     def show_msg(message):
         print(message)

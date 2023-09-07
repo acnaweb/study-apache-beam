@@ -1,4 +1,7 @@
-export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json
+# export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json
+export GOOGLE_APPLICATION_CREDENTIALS=./credentials/sa-petrobras@dhuodata.json
+export CONFIG_DIR_BASE=/home/ac/Projects/study-apache-beam/config
+
 
 install:
 	pip install -r requirements.dev.txt
@@ -16,8 +19,11 @@ run_dataflow_bq:
 show:
 	python main.py --cfg hydra
 
-publish:
-	python src/publisher.py	+pubsub=producer
-
+produce:
+	python src/producer.py	--config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
+	
 consume:
-	python src/consumer.py	+pubsub=consumer
+	python src/consumer.py	--config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
+
+run_all:
+	python src/pipeline_dataflow_stream.py --config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
