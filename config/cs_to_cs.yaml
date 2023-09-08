@@ -2,7 +2,7 @@ job:
   name: ingestion-filesystem-to-filesystem
   type: FILE_TO_FILE
   
-script: 
+pipeline: 
   path: /home/ac/Projects/pipelines/
   name: to_split # direct_copy, to_dict
 

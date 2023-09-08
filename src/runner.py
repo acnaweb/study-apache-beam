@@ -12,12 +12,12 @@ def main(cfg : DictConfig):
     print(OmegaConf.to_yaml(cfg))
 
     import sys
-    sys.path.append(cfg.script.path)
+    sys.path.append(cfg.pipeline.path)
 
     di = DataIngestion(cfg)
 
     pipeline_func = "pipeline"
-    pipeline_alias = getattr(importlib.import_module(cfg.script.name), pipeline_func)
+    pipeline_alias = getattr(importlib.import_module(cfg.pipeline.name), pipeline_func)
     di.run(pipeline_alias)
 
     # job_template = {}
