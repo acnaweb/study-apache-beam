@@ -1,30 +1,30 @@
 gcp:
-  project: "study-gcp-398200"
+  project: "dhuodata" 
 
 pubsub:
-  topic: "projects/study-gcp-398200/topics/acnaweb-topic-demo"
-  subscription: "projects/study-gcp-398200/subscriptions/cloudstorage-sub"
+  topic: "projects/dhuodata/topics/petro-topic-demo"
+  subscription: "projects/dhuodata/subscriptions/cloudstorage-sub"
 
 dataflow:
   runner: "DataflowRunner" # default
   region: "us-west1"
-  staging_location: "gs://acnaweb-datalake-demo/temp"
-  temp_location: "gs://acnaweb-datalake-demo/temp"
-  template_location: "gs://acnaweb-datalake-demo/template/stream_to_bigquery"
+  staging_location: "gs://petro-datalake-demo/temp"
+  temp_location: "gs://petro-datalake-demo/temp"
+  template_location: "gs://petro-datalake-demo/template/stream_to_bigquery"
   save_main_session: True
-  subnetwork: "https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default"
+  subnetwork: "https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster"
   requirements_file: "requirements.txt"
   streaming: True
   max_num_workers: 2
 
 input:
   # file: "./data/raw/voos_sample.csv" 
-  file: "gs://acnaweb-datalake-demo/inputs/voos_sample.csv"
+  file: "gs://petro-datalake-demo/inputs/voos_sample.csv"
   separator: ","
 
 output:
   file: 
-    name: "gs://acnaweb-datalake-demo/outputs/voo_enrich.csv"        
+    name: "gs://petro-datalake-demo/outputs/voo_enrich.csv"        
     columns:
       - col1
       - col2
@@ -39,7 +39,7 @@ output:
       - col11
       - col12 
   bigquery:
-    table: "study-gcp-398200:datalake.voos"
+    table: "dhuodata:datalake.voos"
     schema: 
       - col1:STRING
       - col2:STRING

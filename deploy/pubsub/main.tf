@@ -1,16 +1,15 @@
 
 locals {
   subscriber_list = [
-      {name: "cloudstorage-sub"}, 
-      {name: "bigquery-sub"}, 
-      {name: "bigtable-sub"}      
+      {name: "${var.prefix}-cloudstorage-sub"}, 
+      {name: "${var.prefix}-bigquery-sub"}, 
+      {name: "${var.prefix}-bigtable-sub"}      
   ]
 }
 
 resource "google_pubsub_topic" "topics" {
     name     = "${var.prefix}-topic-demo"
 }
-
 
 resource "google_pubsub_subscription" "subscriptions" {
   for_each = { for obj in local.subscriber_list : "${obj.name}" => obj }

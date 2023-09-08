@@ -25,5 +25,5 @@ produce:
 consume:
 	python src/consumer.py	--config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
 
-run_all:
-	python src/pipeline_dataflow_stream.py --config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
+fs_fs:
+	python src/data_ingestion.py --config-dir=${CONFIG_DIR_BASE} --config-name=fs_fs

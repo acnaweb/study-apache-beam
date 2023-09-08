@@ -1,0 +1,58 @@
+job:
+  name: dataingestion-cs
+  type: type1
+  streaming: True
+
+gcp:
+  project: study-gcp-398200
+  pubsub:
+    topic: projects/study-gcp-398200/topics/acnaweb-topic-demo
+    subscription: projects/study-gcp-398200/subscriptions/acnaweb-cloudstorage-sub
+  dataflow:
+    runner: DataflowRunner # default
+    region: us-west1
+    staging_location: gs://acnaweb-datalake-demo/temp
+    temp_location: gs://acnaweb-datalake-demo/temp
+    template_location: gs://acnaweb-datalake-demo/template
+    save_main_session: True
+    subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
+    requirements_file: requirements.txt
+    max_num_workers: 2
+
+dataset:
+  input:
+    # file: "./data/raw/voos_sample.csv" 
+    file: gs://acnaweb-datalake-demo/inputs/voos_sample.csv
+    separator: ","
+
+  output:
+    file: 
+      name: gs://acnaweb-datalake-demo/outputs/voo_enrich.csv
+      columns:
+        - col1
+        - col2
+        - col3
+        - col4
+        - col5
+        - col6
+        - col7
+        - col8
+        - col9
+        - col10
+        - col11
+        - col12 
+    bigquery:
+      table: study-gcp-398200:datalake.voos
+      schema: 
+        - col1:STRING
+        - col2:STRING
+        - col3:STRING
+        - col4:STRING
+        - col5:STRING
+        - col6:STRING
+        - col7:STRING
+        - col8:STRING
+        - col9:STRING
+        - col10:STRING
+        - col11:STRING
+        - col12:STRING

@@ -1,6 +1,12 @@
 # Study Apache Beam
 
 
+## Features
+
+| Config Template | Source (Input) | Target (Output) | 
+|---|---|---|
+| fs_fs.yaml| File System | File System |
+
 ### Environment
 
 
