@@ -4,8 +4,6 @@ from omegaconf import DictConfig, OmegaConf
 from data_ingestion import DataIngestion
 
 
-
-
 @hydra.main(version_base=None)
 def main(cfg : DictConfig):
 
@@ -42,14 +40,6 @@ def main(cfg : DictConfig):
     #     }
         
     # pipelineOptions = PipelineOptions.from_dictionary(job_template)
-
-
-
-    # if cfg.output.bigquery:
-    #     output_bigquery = {        
-    #         "table": cfg.output.bigquery.table,
-    #         "schema": ",".join(cfg.output.bigquery.schema)
-    #     }
 
 
     #     # Has Pubsub

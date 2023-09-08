@@ -19,3 +19,7 @@ file_to_file:
 cs_to_cs:
 	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
 	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=cs_to_cs
+
+cs_to_bigquery:
+	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
+	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=cs_to_bigquery

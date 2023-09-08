@@ -12,12 +12,12 @@ class FileToFile:
 
 
     def validate(self) -> bool:
-        if not self.cfg.dataset.input.file.name:
-            raise Exception("cfg.dataset.input.file.name not found")
-        elif not self.cfg.dataset.output.file.name:
-            raise Exception("cfg.dataset.output.file.name not found")
-        self.input_file = self.cfg.dataset.input.file.name
-        self.output_file = self.cfg.dataset.output.file.name
+        if not self.cfg.dataset.input.file:
+            raise Exception("cfg.dataset.input.file not found")
+        elif not self.cfg.dataset.output.file:
+            raise Exception("cfg.dataset.output.file not found")
+        self.input_file = self.cfg.dataset.input.file
+        self.output_file = self.cfg.dataset.output.file
 
 
     def run(self, callback) ->  None:

@@ -1,5 +1,6 @@
 from omegaconf import DictConfig
 from file_to_file import FileToFile
+from file_to_bigquery import FileToBigQuery
 
 class DataIngestion:
 
@@ -11,6 +12,8 @@ class DataIngestion:
 
         if self.job_type == "FILE_TO_FILE":
             self.data_ingestion = FileToFile(self.cfg)
+        elif self.job_type == "FILE_TO_BIGQUERY":
+            self.data_ingestion = FileToBigQuery(self.cfg)
         else:
             raise Exception(f"Invalid job_type")
 
