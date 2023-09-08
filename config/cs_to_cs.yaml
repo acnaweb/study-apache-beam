@@ -1,0 +1,15 @@
+job:
+  name: ingestion-filesystem-to-filesystem
+  type: FS_FS
+  
+dataset:
+  input:
+    file: 
+      name: gs://acnaweb-datalake-demo/inputs/voos_sample.csv
+      separator: ","
+
+  output:
+    file: 
+      name: gs://acnaweb-datalake-demo/outputs/voo_enrich.csv
+
+    

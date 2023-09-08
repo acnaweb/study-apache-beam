@@ -1,5 +1,4 @@
-# export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json
-export GOOGLE_APPLICATION_CREDENTIALS=./credentials/sa-petrobras@dhuodata.json
+
 export CONFIG_DIR_BASE=/home/ac/Projects/study-apache-beam/config
 
 
@@ -25,5 +24,9 @@ produce:
 consume:
 	python src/consumer.py	--config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
 
-fs_fs:
-	python src/data_ingestion.py --config-dir=${CONFIG_DIR_BASE} --config-name=fs_fs
+file_to_file:
+	python src/data_ingestion.py --config-dir=${CONFIG_DIR_BASE} --config-name=file_to_file
+
+cs_to_cs:
+	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
+	python src/data_ingestion.py --config-dir=${CONFIG_DIR_BASE} --config-name=cs_to_cs

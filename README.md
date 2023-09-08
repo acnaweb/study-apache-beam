@@ -3,9 +3,11 @@
 
 ## Features
 
-| Config Template | Source (Input) | Target (Output) | 
-|---|---|---|
-| fs_fs.yaml| File System | File System |
+| Config Template | Source (Input) | Target (Output) | Runner |
+|---|---|---|---|
+| file_to_file.yaml| File System | File System | Apache Beam |
+| cs_to_cs.yaml| Cloud Storage | Cloud Storage | Apache Beam |
+
 
 ### Environment
 

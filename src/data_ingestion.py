@@ -41,13 +41,15 @@ class DhuoDataIngestion:
 
     def __init__(self, cfg : DictConfig) -> None:
         self.cfg = cfg
-        self.job_type: str = self.cfg.job.type.upper()
+        self.job_type = self.cfg.job.type.upper()
+        self.job_name = self.cfg.job.name
         self.data_ingestion = None
 
         if self.job_type == "FS_FS":
             self.data_ingestion = FileSystemToFileSystem(self.cfg)
 
     def run(self) -> None:
+        print(f"Job: {self.job_name}")
         self.data_ingestion.run()
         
 
