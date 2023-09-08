@@ -4,6 +4,7 @@ locals {
       {folder: "outputs/"}, 
       {folder: "temp/"}, 
       {folder: "template/"}, 
+      {folder: "pipelines/"},       
   ]
 }
 
