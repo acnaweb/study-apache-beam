@@ -1,18 +1,18 @@
-job:
+job:  
   name: ingestion-filesystem-to-filesystem
   type: FILE_TO_FILE
-
+  
 pipeline: 
   path: /home/ac/Projects/pipelines/
-  name: to_dict # to_dict | direct_copy | to_list
+  name: to_list # to_dict | direct_copy | to_list
 
 dataset:
   input:
-    file: ./data/raw/voos_sample.csv
+    file: gs://acnaweb-datalake-demo/inputs/voos_sample.csv
     separator: ","
 
   output:
-    file: ./data/processed/voo_enrich.csv
+    file: gs://acnaweb-datalake-demo/outputs/voo_enrich.csv
     columns:
     - col1
     - col2

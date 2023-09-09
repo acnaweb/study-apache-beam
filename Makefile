@@ -13,13 +13,17 @@ produce:
 consume:
 	python src/consumer.py	--config-dir=${CONFIG_DIR_BASE}/dataflow/acnaweb --config-name=all
 
-file_to_file:
-	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=file_to_file
+beam_file_to_file:
+	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=beam_file_to_file
 
-cs_to_cs:
+beam_cs_to_cs:
 	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
-	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=cs_to_cs
+	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=beam_cs_to_cs
 
-cs_to_bigquery:
+beam_cs_to_bigquery:
 	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
-	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=cs_to_bigquery
+	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=beam_cs_to_bigquery
+
+dataflow_cs_to_cs:
+	export GOOGLE_APPLICATION_CREDENTIALS=./credentials/data-ingestion@study-gcp.json && \
+	python src/runner.py --config-dir=${CONFIG_DIR_BASE} --config-name=dataflow_cs_to_cs	

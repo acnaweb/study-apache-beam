@@ -66,9 +66,12 @@ bucket_name/template
 - https://python.plainenglish.io/apache-beam-flink-cluster-kubernetes-python-a1965f37b7cb
 - https://towardsdatascience.com/data-pipelines-with-apache-beam-86cd8eb55fd8
 - https://blog.marcnuri.com/prometheus-grafana-setup-minikube
-
-
-https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py
+- https://github.com/apache/beam/blob/master/sdks/python/apache_beam/examples/wordcount.py
+- https://itnext.io/pubsub-to-bigtable-piping-your-data-stream-in-via-gcp-cloud-functions-a2ef785935b5
+- https://skuad-engineering.medium.com/apache-beam-etl-via-google-cloud-dataflow-from-bigquery-to-bigtable-59665a5dfd70
+- https://www.macrometa.com/event-stream-processing/apache-beam-tutorial
+- https://beam.apache.org/documentation/transforms/python/aggregation/sample/
+- https://beam.apache.org/documentation/pipelines/design-your-pipeline/
 
 python3 -m \
     apache_beam.examples.wordcount \
