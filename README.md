@@ -30,13 +30,13 @@ deploy/terraform.tfvars
 ```
 project_id="study-gcp-398200"
 region="us-west1"
-bucket_name="acnaweb-study-datalake"
 credentials="../credentials/data-ingestion@study-gcp.json"
+prefix="prefix"
 ```
 
 #### Terraform apply/destroy
 
-terraform destroy -var-file="terraform.dhuodata.tfvars"
+terraform destroy -var-file="terraform.acnaweb.tfvars"
 
 
 ### Object Store
