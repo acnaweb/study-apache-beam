@@ -5,22 +5,23 @@ job:
 pipeline: 
   name: pipelines.steps.to_dict # to_dict | direct_copy | to_list
 
-gcp:
+gcp:  
+  dataflow: None
   project: study-gcp-398200
-  temp_location: gs://acnaweb-datalake-demo/temp
+  temp_location: gs://prefix-datalake-demo/temp
 
 dataset:
   input:
-    file: gs://acnaweb-datalake-demo/inputs/voos_sample.csv
+    file: gs://prefix-datalake-demo/inputs/voos_sample.csv
     separator: ","
     
   output:
-    file: gs://acnaweb-datalake-demo/outputs/voo_enrich.csv
-    table: acnaweb_dataset_demo.voos
+    file: gs://prefix-datalake-demo/outputs/voo_enrich.csv
+    table: prefix_dataset_demo.voos
     columns:
-    - col1
+    - data
     - col2
-    - col3
+    - seq
     - col4
     - col5
     - col6
@@ -31,9 +32,9 @@ dataset:
     - col11
     - col12 
     schema:
-    - col1:STRING
-    - col2:STRING
-    - col3:STRING
+    - data:STRING
+    - col2:INTEGER
+    - seq:INTEGER
     - col4:STRING
     - col5:STRING
     - col6:STRING

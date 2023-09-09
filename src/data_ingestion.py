@@ -2,6 +2,7 @@ from omegaconf import DictConfig
 from file_to_file import FileToFile
 from file_to_bigquery import FileToBigQuery
 
+
 class DataIngestion:
 
     def __init__(self, cfg : DictConfig) -> None:

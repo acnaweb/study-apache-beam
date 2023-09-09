@@ -1,5 +1,5 @@
 job:  
-  name: ingestion-file-to-file
+  name: dataflow_cs_tocs
   type: FILE_TO_FILE
   
 pipeline: 
@@ -7,11 +7,11 @@ pipeline:
 
 gcp:
   project: study-gcp-398200
-  temp_location: gs://acnaweb-datalake-demo/temp
+  temp_location: gs://prefix-datalake-demo/temp
   dataflow:
     region: us-west1
-    staging_location: gs://acnaweb-datalake-demo/temp
-    template_location: gs://acnaweb-datalake-demo/template/ingestion-file-to-file
+    staging_location: gs://prefix-datalake-demo/temp
+    template_location: gs://prefix-datalake-demo/template
     save_main_session: True
     subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
     requirements_file: requirements.txt
@@ -20,15 +20,15 @@ gcp:
 
 dataset:
   input:
-    file: gs://acnaweb-datalake-demo/inputs/voos_sample.csv
+    file: gs://prefix-datalake-demo/inputs/voos_sample.csv
     separator: ","
 
   output:
-    file: gs://acnaweb-datalake-demo/outputs/voo_enrich.csv
+    file: gs://prefix-datalake-demo/outputs/voo_enrich.csv
     columns:
-    - col1
+    - data
     - col2
-    - col3
+    - seq
     - col4
     - col5
     - col6

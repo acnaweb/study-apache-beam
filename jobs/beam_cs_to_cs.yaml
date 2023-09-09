@@ -3,9 +3,11 @@ job:
   type: FILE_TO_FILE
   
 pipeline: 
-  name: pipelines.steps.to_list # to_dict | direct_copy | to_list
+  name: pipelines.steps.to_dict # to_dict | direct_copy | to_list
 
-
+gcp:  
+  dataflow: None
+  
 dataset:
   input:
     file: gs://prefix-datalake-demo/inputs/voos_sample.csv
@@ -14,9 +16,9 @@ dataset:
   output:
     file: gs://prefix-datalake-demo/outputs/voo_enrich.csv
     columns:
-    - col1
+    - data
     - col2
-    - col3
+    - seq
     - col4
     - col5
     - col6
