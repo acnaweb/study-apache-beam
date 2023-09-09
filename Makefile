@@ -1,5 +1,5 @@
 
-export CONFIG_DIR_BASE=/home/ac/Projects/study-apache-beam/config
+export CONFIG_DIR_BASE=./jobs
 
 install:
 	pip install -r requirements.dev.txt

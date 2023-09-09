@@ -3,8 +3,7 @@ job:
   type: FILE_TO_BIGQUERY
   
 pipeline: 
-  path: /home/ac/Projects/pipelines/
-  name: to_dict # to_dict | direct_copy | to_list
+  name: pipelines.steps.to_dict # to_dict | direct_copy | to_list
 
 gcp:
   project: study-gcp-398200
