@@ -72,6 +72,7 @@ bucket_name/template
 - https://www.macrometa.com/event-stream-processing/apache-beam-tutorial
 - https://beam.apache.org/documentation/transforms/python/aggregation/sample/
 - https://beam.apache.org/documentation/pipelines/design-your-pipeline/
+- https://cloud.google.com/dataflow/docs/guides/using-custom-containers
 
 python3 -m \
     apache_beam.examples.wordcount \
@@ -90,3 +91,17 @@ python3 -m \
 
 - https://github.com/terraform-google-modules/terraform-google-cloud-storage/tree/v4.0.1/modules/simple_bucket
 
+### Create Data flow Job
+```
+POST /v1b3/projects/${{PROJECT_ID}}/locations/${{REGION}}/templates:launch?gcsPath=${GCP_TEMP_LOCATION}}/${{JOB_NAME}}
+{
+    "jobName": "job_base",
+    "environment": {
+        "bypassTempDirValidation": false,
+        "tempLocation": "gs://prefix-datalake-demo/temp/",
+        "additionalExperiments": [],
+        "additionalUserLabels": {}
+    },
+    "parameters": {}
+}
+```

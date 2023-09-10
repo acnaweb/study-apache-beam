@@ -5,10 +5,10 @@ job:
 pipeline: 
   name: pipelines.steps.to_dict # to_dict | direct_copy | to_list
 
-gcp:  
-  dataflow: None
+gcp: 
   project: study-gcp-398200
   temp_location: gs://prefix-datalake-demo/temp
+  dataflow: 
 
 dataset:
   input:

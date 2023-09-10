@@ -24,7 +24,7 @@ class FileToFile:
 
     def run(self, callback) ->  None:
         # check if use Dataflow
-        if self.cfg.gcp.dataflow: 
+        if self.cfg.gcp.dataflow:
             pipelineOptions = PipelineOptions.from_dictionary(build_dataflow_options(self.cfg))
         else:
             pipelineOptions = PipelineOptions(argc=None)    

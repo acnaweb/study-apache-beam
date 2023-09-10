@@ -11,7 +11,8 @@ def build_dataflow_options(cfg : DictConfig):
         "template_location": f"{cfg.gcp.dataflow.template_location}/{cfg.job.name}",
         "save_main_session": cfg.gcp.dataflow.save_main_session,
         "subnetwork": cfg.gcp.dataflow.subnetwork,
-        "requirements_file": cfg.gcp.dataflow.requirements_file,
+        "requirements_file": "requirements.txt",
+        "setup_file": "setup.py",
         "streaming": cfg.gcp.dataflow.streaming,
         "max_num_workers": cfg.gcp.dataflow.max_num_workers
     }

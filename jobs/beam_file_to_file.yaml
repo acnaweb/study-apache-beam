@@ -6,7 +6,8 @@ pipeline:
   name: pipelines.steps.to_dict # to_dict | direct_copy | to_list
 
 gcp:  
-  dataflow: None
+  project: 
+  dataflow: 
   
 dataset:
   input:
