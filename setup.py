@@ -5,11 +5,11 @@ REQUIRED_PACKAGES = [
 ]
 
 setup (
-    name="study-beam",
-    version="0.0.4",
+    name="dhuoflow",
+    version="0.0.5",
     install_requires=REQUIRED_PACKAGES,
     packages=find_packages(include=['src', 'src.*']),
     entry_points={
-        'console_scripts': ['beam_run=src.main:main']
+        'console_scripts': ['dhuoflow=src.main:main']
     }	
 )
