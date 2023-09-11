@@ -1,5 +1,5 @@
 job:  
-  name: ingestion_voos
+  name: job2
   type: FILE_TO_FILE
   
 pipeline: 
@@ -12,7 +12,7 @@ gcp:
     region: us-west1
     staging_location: gs://prefix-datalake-demo/temp
     template_location: gs://prefix-datalake-demo/template
-    save_main_session: True
+    save_main_session: False
     subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
     streaming: False
     max_num_workers: 2

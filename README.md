@@ -73,6 +73,9 @@ bucket_name/template
 - https://beam.apache.org/documentation/transforms/python/aggregation/sample/
 - https://beam.apache.org/documentation/pipelines/design-your-pipeline/
 - https://cloud.google.com/dataflow/docs/guides/using-custom-containers
+- https://medium.com/google-cloud/installing-python-dependencies-in-dataflow-fe1c6cf57784
+- https://stackoverflow.com/questions/16981921/relative-imports-in-python-3
+- https://godatadriven.com/blog/a-practical-guide-to-using-setup-py/
 
 python3 -m \
     apache_beam.examples.wordcount \
