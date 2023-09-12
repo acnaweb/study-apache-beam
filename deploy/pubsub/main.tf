@@ -8,7 +8,7 @@ locals {
 }
 
 resource "google_pubsub_topic" "topics" {
-    name     = "${var.prefix}-topic-demo"
+    name     = "${var.prefix}-topic"
 }
 
 resource "google_pubsub_subscription" "subscriptions" {

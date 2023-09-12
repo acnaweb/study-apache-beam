@@ -76,6 +76,8 @@ bucket_name/template
 - https://medium.com/google-cloud/installing-python-dependencies-in-dataflow-fe1c6cf57784
 - https://stackoverflow.com/questions/16981921/relative-imports-in-python-3
 - https://godatadriven.com/blog/a-practical-guide-to-using-setup-py/
+- https://cloud.google.com/dataflow/docs/tutorials/dataflow-stream-to-bigquery?hl=pt-br
+
 
 python3 -m \
     apache_beam.examples.wordcount \
