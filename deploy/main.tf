@@ -23,4 +23,11 @@ module "bigquery" {
   prefix  = var.prefix
 }
 
+module "bigtable" {
+  source = "./bigtable"  
+  region   = var.region
+  prefix  = var.prefix
+}
+
+
 

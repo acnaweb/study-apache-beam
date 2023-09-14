@@ -1,7 +1,8 @@
 from setuptools import setup, find_packages
 
 REQUIRED_PACKAGES = [
-    'hydra-core==1.3.2'
+    'hydra-core==1.3.2',
+    'statsd-exporter===3.2.1'
 ]
 
 setup (

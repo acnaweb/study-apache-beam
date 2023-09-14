@@ -1,7 +1,7 @@
 job:  
   name: voos-cs-to-bigquery
 
-use_dataflow: False
+use_dataflow: True
 
 gcp:
   project: study-gcp-398200
@@ -11,7 +11,8 @@ gcp:
     staging_location: gs://acnaweb-datalake/temp
     template_location: gs://acnaweb-datalake/template
     save_main_session: False
-    subnetwork: https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster
+    # subnetwork: https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster
+    subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
     streaming: False
     max_num_workers: 2
 

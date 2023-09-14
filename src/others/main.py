@@ -61,14 +61,6 @@ def main(cfg : DictConfig):
     # pipelineOptions = PipelineOptions.from_dictionary(job_template)
 
 
-    #     # Has Pubsub
-    #     if cfg.get("pubsub"):
-    #         pubsub = {
-    #             "topic": cfg.pubsub.topic,
-    #             "subscription": cfg.pubsub.subscription
-    #         }
-    #         data = p | "Read topic" >> beam.io.ReadFromPubSub(subscription=pubsub["subscription"])
-
     #     # data_window = data | "Window" >> beam.WindowInto(window.)
 
 

@@ -1,11 +1,39 @@
+import logging
 import hydra
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
+from apache_beam import window
 from omegaconf import DictConfig, OmegaConf
 
 
-class DhuoFlowUtils:
+def setup_logging():
+    LOG_FORMAT='%(asctime)s %(message)s'
+    logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
+
+def get_metric_client(cfg : DictConfig):
+    from statsd import StatsClient
+    
+    return StatsClient(        
+        host=cfg.observability.statsDHost, 
+        port=cfg.observability.statsDPort, 
+        prefix=cfg.observability.prefix)
+
+
+def send_metric(metric):
+    logging.info(metric)
+    metric_client.incr(metric)
+
+
+class SplitLines(beam.DoFn):
+  def __init__(self, separator):
+      self.separator = separator
+  
+  def process(self,record):
+    return [record.decode("utf-8").split(self.separator)]
+
+
+class DhuoFlowUtils:
 
     @staticmethod
     def list_to_dict(record, columns):
@@ -61,9 +89,10 @@ class DhuoFlowUtils:
             "subnetwork": cfg.gcp.dataflow.subnetwork,
             "streaming": cfg.gcp.dataflow.streaming,
             "max_num_workers": cfg.gcp.dataflow.max_num_workers,
-            "setup_file": "./setup.py"
+            "setup_file": "./setup.py",
+            "statsDHost": cfg.observability.statsDHost,
+            "statsDPort": cfg.observability.statsDPort,
         }
-
 
 
 class DhuoFlow:
@@ -94,26 +123,41 @@ class DhuoFlow:
         self.table_name = f"{self.gcp_project}:{self.cfg.dataset.output.table}"
         self.table_schema = DhuoFlowUtils.schema_as_line(self.cfg.dataset.output.schema)
         self.output_columns = self.cfg.dataset.output.columns
+        self.subscription = self.cfg.gcp.pubsub.subscription
 
     def run(self) ->  None:
         # check if use Dataflow
         if self.cfg.use_dataflow:
             pipelineOptions = PipelineOptions.from_dictionary(DhuoFlowUtils.build_dataflow_options(self.cfg))
         else:
-            pipelineOptions = PipelineOptions(argc=None)    
+            options = {           
+                "streaming": True
+            }
+            pipelineOptions = PipelineOptions.from_dictionary(options) 
             
+        
         with beam.Pipeline(options = pipelineOptions) as p:   
-            data = DhuoFlowUtils.load_file(p, self.input_file)            
-            data_as_list = DhuoFlowUtils.to_list(data, self.input_separator)
-            data_as_dict = DhuoFlowUtils.to_dict(data_as_list, self.output_columns)            
+            send_metric(f"read_topic.{self.subscription}")
+            data = p | "Read topic" >> beam.io.ReadFromPubSub(subscription=self.subscription)
+            data_as_list = data | "Split" >> beam.ParDo(SplitLines(self.input_separator))
+            data_as_dict = DhuoFlowUtils.to_dict(data_as_list, self.output_columns)
             DhuoFlowUtils.save_bigquery(data_as_dict, self.table_name, self.table_schema, self.gcp_temp_location)
 
-    
+
+
+
 @hydra.main(version_base=None, config_name="config", config_path=".")
 def main(cfg: DictConfig):
 
     print(OmegaConf.to_yaml(cfg))
+    setup_logging()
 
+    global metric_client
+    metric_client = get_metric_client(cfg)
+
+    send_metric("job_execution")
+    send_metric("dionisio")
+    send_metric("dionisio")
     dhuoflow = DhuoFlow(cfg)
     dhuoflow.run()
 

@@ -1,0 +1,6 @@
+mappings:
+  - match: "statsd_dataflow.rejected.*.reason.*"
+    name: "rejected"
+    labels:
+        step: "$1"
+        reason: "$2"

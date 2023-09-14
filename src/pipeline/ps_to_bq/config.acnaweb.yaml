@@ -1,7 +1,7 @@
 job:  
-  name: voos-cs-to-cs
+  name: voos-pubsub-to-bigquery
 
-use_dataflow: False
+use_dataflow: True
 
 gcp:
   project: study-gcp-398200
@@ -10,19 +10,22 @@ gcp:
     region: us-west1
     staging_location: gs://acnaweb-datalake/temp
     template_location: gs://acnaweb-datalake/template
-    save_main_session: False
+    save_main_session: True
     # subnetwork: https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster
-    subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
-    streaming: False
+    subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default    
+    streaming: True
     max_num_workers: 2
-  
+  pubsub:
+    topic:
+    subscription: projects/study-gcp-398200/subscriptions/acnaweb-bigquery-sub
 dataset:
   input:
     file: gs://acnaweb-datalake/inputs/voos_sample.csv
     separator: ","
-
+    
   output:
     file: gs://acnaweb-datalake/outputs/voo_enrich.csv
+    table: acnaweb_dataset.voos3
     columns:
     - data
     - col2
@@ -36,4 +39,18 @@ dataset:
     - col10
     - col11
     - col12 
+    schema:
+    - data:STRING
+    - col2:INTEGER
+    - seq:INTEGER
+    - col4:STRING
+    - col5:STRING
+    - col6:STRING
+    - col7:STRING
+    - col8:STRING
+    - col9:STRING
+    - col10:STRING
+    - col11:STRING
+    - col12:STRING
+
     

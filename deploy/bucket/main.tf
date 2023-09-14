@@ -5,6 +5,7 @@ locals {
       {folder: "temp/"}, 
       {folder: "template/"}, 
       {folder: "pipelines/"},       
+      {folder: "valid_json/"},    
   ]
 }
 

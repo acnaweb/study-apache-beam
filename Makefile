@@ -1,5 +1,5 @@
 export GOOGLE_APPLICATION_CREDENTIALS=/home/ac/Projects/study-apache-beam/credentials/data-ingestion@study-gcp.json
-
+export GOOGLE_APPLICATION_CREDENTIALS=/home/ac/Projects/study-apache-beam/credentials/sa-petrobras@dhuodata.json
 install:
 	python -m venv venv; \
 	. venv/bin/activate; \
@@ -10,3 +10,9 @@ cs_to_cs:
 
 cs_to_bq:
 	python src/pipeline/cs_to_bq/pipeline.py	
+
+cs_to_bt:
+	python src/pipeline/cs_to_bt/pipeline.py	
+
+ps_to_bq:
+	python src/pipeline/ps_to_bq/pipeline.py		

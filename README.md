@@ -77,20 +77,19 @@ bucket_name/template
 - https://stackoverflow.com/questions/16981921/relative-imports-in-python-3
 - https://godatadriven.com/blog/a-practical-guide-to-using-setup-py/
 - https://cloud.google.com/dataflow/docs/tutorials/dataflow-stream-to-bigquery?hl=pt-br
-
-
-python3 -m \
-    apache_beam.examples.wordcount \
-    --region southamerica-east1 --input \
-    gs://acnaweb-curso-apache-beam/inputs/voos_sample.csv \
-    --output \
-    gs://acnaweb-curso-apache-beam/outputs/voos.csv \
-    --runner DataflowRunner \
-    --project \
-    curso-dataflow-beam-397504 \
-    --temp_location \
-    gs://acnaweb-curso-apache-beam/temp/
-
+- https://itnext.io/pubsub-to-bigtable-piping-your-data-stream-in-via-gcp-cloud-functions-a2ef785935b5
+- https://stackoverflow.com/questions/71438134/streaming-pubsub-bigtable-using-apache-beam-dataflow-java
+- https://www.cloudskillsboost.google/focuses/58496?parent=catalog
+- https://cloud.google.com/bigtable/docs/cbt-overview?hl=pt-br
+- https://cloud.google.com/sdk/gcloud/reference/auth/login
+- https://cloud.google.com/bigtable/docs/cbt-overview?hl=pt-br
+- https://cloud.google.com/sdk/docs/quickstart-linux
+- https://www.kamalsblog.com/2019/10/moving-data-from-google-storage-to-bigtable-using-dataflow.html
+- https://cloud.google.com/bigtable/docs/samples/bigtable-writes-batch?hl=pt-br
+- https://medium.com/@Sushil_Kumar/-custom-metrics-in-dataflow-pipelines-with-prometheus-and-statsd-9f37332f2992
+- https://dev.to/kirklewis/metrics-with-prometheus-statsd-exporter-and-grafana-5145
+- https://pypi.org/project/statsd-exporter/
+- https://github.com/prometheus/statsd_exporter
 
 ### Terraform
 

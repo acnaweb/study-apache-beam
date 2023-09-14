@@ -1,5 +1,5 @@
 job:  
-  name: voos-cs-to-cs
+  name: pessoas-to-bigtable
 
 use_dataflow: False
 
@@ -15,14 +15,18 @@ gcp:
     subnetwork: https://www.googleapis.com/compute/v1/projects/study-gcp-398200/regions/us-west1/subnetworks/default
     streaming: False
     max_num_workers: 2
-  
+
 dataset:
   input:
-    file: gs://acnaweb-datalake/inputs/voos_sample.csv
+    file: /home/ac/Projects/study-apache-beam/data/raw/pessoas.json
     separator: ","
-
+    
   output:
-    file: gs://acnaweb-datalake/outputs/voo_enrich.csv
+    file: gs://acnaweb-datalake/outputs/pessoas_new.csv
+    bigquery: acnaweb_dataset.pessoas
+    bigtable: 
+      instance: acnaweb-bigtable-instance
+      table: pessoas
     columns:
     - data
     - col2
@@ -36,4 +40,18 @@ dataset:
     - col10
     - col11
     - col12 
+    schema:
+    - data:STRING
+    - col2:INTEGER
+    - seq:INTEGER
+    - col4:STRING
+    - col5:STRING
+    - col6:STRING
+    - col7:STRING
+    - col8:STRING
+    - col9:STRING
+    - col10:STRING
+    - col11:STRING
+    - col12:STRING
+
     
