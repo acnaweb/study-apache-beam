@@ -1,4 +1,3 @@
-export GOOGLE_APPLICATION_CREDENTIALS=/home/ac/Projects/study-apache-beam/credentials/data-ingestion@study-gcp.json
 export GOOGLE_APPLICATION_CREDENTIALS=/home/ac/Projects/study-apache-beam/credentials/sa-petrobras@dhuodata.json
 install:
 	python -m venv venv; \
