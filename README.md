@@ -109,3 +109,17 @@ POST /v1b3/projects/${{PROJECT_ID}}/locations/${{REGION}}/templates:launch?gcsPa
     "parameters": {}
 }
 ```
+
+
+#### Apresentação
+
+- Ingestão - PS -> BT -> BQ
+- Job pronto
+Ações
+- Envio de msg pelo Tópico
+- Query no BT/BQ
+- DataFlow 
+    Grafo
+    
+
+

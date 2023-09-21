@@ -4,25 +4,13 @@ import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from apache_beam import window
 from omegaconf import DictConfig, OmegaConf
+from statsd import StatsClient
+
 
 
 def setup_logging():
     LOG_FORMAT='%(asctime)s %(message)s'
     logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-
-
-def get_metric_client(cfg : DictConfig):
-    from statsd import StatsClient
-    
-    return StatsClient(        
-        host=cfg.observability.statsDHost, 
-        port=cfg.observability.statsDPort, 
-        prefix=cfg.observability.prefix)
-
-
-def send_metric(metric):
-    logging.info(metric)
-    metric_client.incr(metric)
 
 
 class SplitLines(beam.DoFn):
@@ -94,12 +82,22 @@ class DhuoFlowUtils:
             "statsDPort": cfg.observability.statsDPort,
         }
 
-
 class DhuoFlow:
 
-    def __init__(self, cfg : DictConfig) -> None:
+    def __init__(self, cfg: DictConfig) -> None:
         self.cfg = cfg
         self.validate()
+
+        self.statsClient = StatsClient(        
+            host=self.cfg.observability.statsDHost, 
+            port=self.cfg.observability.statsDPort, 
+            prefix=self.cfg.observability.prefix
+        )
+
+
+    def send_metric(self, metric):
+            logging.info(f"{self.cfg.job.name}.{metric}")
+            self.statsClient.incr(f"{self.cfg.job.name}.{metric}")
 
 
     def validate(self) -> bool:
@@ -113,8 +111,7 @@ class DhuoFlow:
             raise Exception("cfg.dataset.output.schema not found")
         elif not self.cfg.gcp.project:
             raise Exception("cfg.gcp.project not found")
-        elif not self.cfg.gcp.temp_location:
-            raise Exception("cfg.gcp.temp_location not found")     
+
 
         self.gcp_project =  self.cfg.gcp.project
         self.gcp_temp_location =  self.cfg.gcp.temp_location
@@ -126,23 +123,36 @@ class DhuoFlow:
         self.subscription = self.cfg.gcp.pubsub.subscription
 
     def run(self) ->  None:
+
+        statsClient = StatsClient(        
+            host=self.cfg.observability.statsDHost, 
+            port=self.cfg.observability.statsDPort, 
+            prefix=self.cfg.observability.prefix
+        )
+
+
+        def send_metric(metric):
+            logging.info(metric)
+            statsClient.incr(metric)
+
         # check if use Dataflow
-        if self.cfg.use_dataflow:
+        use_dataflow = True
+        if use_dataflow:
             pipelineOptions = PipelineOptions.from_dictionary(DhuoFlowUtils.build_dataflow_options(self.cfg))
         else:
             options = {           
                 "streaming": True
             }
             pipelineOptions = PipelineOptions.from_dictionary(options) 
-            
+                     
         
         with beam.Pipeline(options = pipelineOptions) as p:   
-            send_metric(f"read_topic.{self.subscription}")
+            send_metric(f"pubsub.{self.subscription}")
             data = p | "Read topic" >> beam.io.ReadFromPubSub(subscription=self.subscription)
             data_as_list = data | "Split" >> beam.ParDo(SplitLines(self.input_separator))
             data_as_dict = DhuoFlowUtils.to_dict(data_as_list, self.output_columns)
+            send_metric(f"save.bigquery.{self.table_name}")
             DhuoFlowUtils.save_bigquery(data_as_dict, self.table_name, self.table_schema, self.gcp_temp_location)
-
 
 
 
@@ -152,12 +162,6 @@ def main(cfg: DictConfig):
     print(OmegaConf.to_yaml(cfg))
     setup_logging()
 
-    global metric_client
-    metric_client = get_metric_client(cfg)
-
-    send_metric("job_execution")
-    send_metric("dionisio")
-    send_metric("dionisio")
     dhuoflow = DhuoFlow(cfg)
     dhuoflow.run()
 

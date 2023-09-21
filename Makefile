@@ -15,3 +15,9 @@ cs_to_bt:
 
 ps_to_bq:
 	python src/pipeline/ps_to_bq/pipeline.py		
+
+ps_to_bt:
+	python src/pipeline/ps_to_bt/pipeline.py	
+
+build:
+	docker build . --tag beam

@@ -52,7 +52,7 @@ class DhuoFlowUtils:
     def build_dataflow_options(cfg : DictConfig):
         return  {
             "project": cfg.gcp.project,
-            "runner": "DataflowRunner",
+            # "runner": "DataflowRunner",
             "region": cfg.gcp.dataflow.region,
             "staging_location": cfg.gcp.dataflow.staging_location,
             "temp_location": cfg.gcp.temp_location,
@@ -64,6 +64,13 @@ class DhuoFlowUtils:
             "setup_file": "./setup.py"
         }
 
+def transf_to_json(json):
+    json["metadata"] = "teste"   
+
+    for key, value in json.items():             
+        json[key] = str(json[value])
+
+    return json
 
 
 class DhuoFlow:
@@ -72,7 +79,7 @@ class DhuoFlow:
         self.cfg = cfg
         self.validate()
 
-
+            
     def validate(self) -> bool:
         if not self.cfg.dataset.input.file:
             raise Exception("cfg.dataset.input.file not found")
@@ -97,16 +104,58 @@ class DhuoFlow:
 
     def run(self) ->  None:
         # check if use Dataflow
-        if self.cfg.use_dataflow:
+        use_dataflow = True
+        if use_dataflow:
             pipelineOptions = PipelineOptions.from_dictionary(DhuoFlowUtils.build_dataflow_options(self.cfg))
         else:
             pipelineOptions = PipelineOptions(argc=None)    
             
-        with beam.Pipeline(options = pipelineOptions) as p:   
-            data = DhuoFlowUtils.load_file(p, self.input_file)            
-            data_as_list = DhuoFlowUtils.to_list(data, self.input_separator)
-            data_as_dict = DhuoFlowUtils.to_dict(data_as_list, self.output_columns)            
-            DhuoFlowUtils.save_bigquery(data_as_dict, self.table_name, self.table_schema, self.gcp_temp_location)
+        from google.oauth2 import service_account
+        from google.cloud import storage
+        import os
+        import re
+        import json
+
+        # Instantiates a client
+        storage_client = storage.Client.from_service_account_json(json_credentials_path=os.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+
+        # The name for the new bucket
+        bucket_name = "petrobras-teste"
+
+        # Note: Client.list_blobs requires at least package version 1.17.0.
+        blobs = storage_client.list_blobs(bucket_name)
+        
+        # Substitua 'YOUR_PROJECT_ID', 'YOUR_INSTANCE_ID', e 'YOUR_TABLE_NAME' pelos seus valores
+        with beam.Pipeline(options = pipelineOptions) as p:
+
+            for blob in blobs:
+                if re.search(".json",str(blob)) :
+                    txt = str(blob)
+                    path = f"gs://{bucket_name}/" + re.sub("\s+", "",txt.split(',')[-2])
+                    # with blob.open("r") as f:
+                    #     texto = f.read()
+                    #     print(texto)
+                    #     lines  =  p  | 'Getdata' >> beam.Create([texto])
+                            
+                                
+                    # data = DhuoFlowUtils.load_file(p, path)  
+
+                    data = p | "Load file " >> beam.io.ReadFromText(path)                    
+                    
+                    # data |  beam.Map(print)           
+                    
+                    # data  =  p  | 'Getdata' >> beam.Create([{"success": "true", "datatype": "float64", "timestamp": "1694802410052", "registerId": "943188A2-35C9-4E8C-B2A7-CEA4C543A94A", "value": "29.35", "deviceID": "2973506F-00D1-424C-ABB4-F7C6649C825E", "tagName": "tubesInc-area01-plc01-machineTemperature", "deviceName": "tubesInc-area01-plc01", "description": "Monitoring of machine temperature", "metadata": '{"rangeAlarmMax": "100", "rangeAlarmMin": "35"}' }]) 
+                    # data_as_list = DhuoFlowUtils.to_list(data, self.input_separator)
+                    # data_as_dict = DhuoFlowUtils.to_dict(data_as_list, self.output_columns)   
+
+                    data_parsed = data | "PARSE JSON" >> beam.Map(json.loads)
+
+                    data_x = data_parsed | "Convert " >> beam.Map(transf_to_json)
+                             
+                    DhuoFlowUtils.save_bigquery(data_x, self.table_name, self.table_schema, self.gcp_temp_location)
+                    break
+
+
 
     
 @hydra.main(version_base=None, config_name="config", config_path=".")

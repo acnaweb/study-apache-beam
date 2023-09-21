@@ -1,22 +1,21 @@
 job:  
-  name: voos-pubsub-to-bigquery-metrics
-
-use_dataflow: Yes
+  name: pubsub-to-bigtable
 
 gcp:
   project: dhuodata
-  temp_location: gs://dhuoflow-datalake/temp
-  dataflow:
-    region: us-west1
-    staging_location: gs://dhuoflow-datalake/temp
-    template_location: gs://dhuoflow-datalake/template
-    save_main_session: True
-    subnetwork: https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster    
+  dataflow:  
     streaming: True
     max_num_workers: 2
   pubsub:
-    topic:
-    subscription: projects/dhuodata/subscriptions/dhuoflow-bigquery-sub
+    topic: projects/dhuodata/topics/input-messages
+    subscription: projects/dhuodata/subscriptions/input-messages-sub
+                  
+  destination:
+    instance: "teste-api"
+    table: "teste_dry_run"
+    key: "row1"
+    familia_columns: "input"
+
 dataset:
   input:
     file: gs://dhuoflow-datalake/inputs/voos_sample.csv
@@ -54,6 +53,6 @@ dataset:
 
 observability:
   statsDHost: "10.10.0.87"
+  # statsDHost: "localhost"
   statsDPort: 9125
   prefix: "statsd_dataflow"
-
