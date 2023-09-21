@@ -207,11 +207,11 @@ class CreateInvoiceDescriptionRowFn(beam.DoFn):
             json_parsed = json_data.decode('utf-8').replace('\t', '').replace('\n', '').replace('\r', '')
             json_parsed = json.loads(json_parsed)
 
-            # dt = datetime.date.today()
-            # now = datetime.datetime.now()
-            # dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
-            # with GcsIO().open(f"gs://{self.bucket}/messages/partition={dt}/{self.key}.json", 'w') as file:
-            #     file.write(json.dumps(json_parsed).encode())            
+            dt = datetime.date.today()
+            now = datetime.datetime.now()
+            dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
+            with GcsIO().open(f"gs://{self.bucket}/messages/partition={dt}/{self.key}.json", 'w') as file:
+                file.write(json.dumps(json_parsed).encode())            
 
             # Save message in processed folder in gcs bucket            
             direct_row = row.DirectRow(row_key=self.key.encode())

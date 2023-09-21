@@ -117,7 +117,11 @@ POST /v1b3/projects/${{PROJECT_ID}}/locations/${{REGION}}/templates:launch?gcsPa
 - Job pronto
 Ações
 - Envio de msg pelo Tópico
+
 - Query no BT/BQ
+```
+SELECT * FROM `dhuodata.petro.dry_run` LIMIT 1000
+```
 - DataFlow 
     Grafo
     
