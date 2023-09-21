@@ -1,5 +1,5 @@
 job:  
-  name: pubsub-to-bigtable
+  name: pubsub-to-bigtable-cs-dryrun4
 
 gcp:
   project: dhuodata
@@ -12,7 +12,7 @@ gcp:
                   
   destination:
     instance: "teste-api"
-    table: "teste_dry_run"
+    table: "dryrun4"
     key: "row1"
     familia_columns: "input"
 

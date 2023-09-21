@@ -1,5 +1,5 @@
 job:  
-  name: cs-to-bigquery
+  name: cs-to-bigquery-dryrun4
 
 use_dataflow: True
 
@@ -8,7 +8,7 @@ gcp:
   temp_location: gs://petrobras-jobs-pubsub/temp
   dataflow:
     region: us-west1
-    staging_location: gs://petrobras-jobs-pubsub/temp
+    staging_location: gs://petrobras-jobs-pubsub/template
     template_location: gs://petrobras-jobs-pubsub/template
     save_main_session: False
     subnetwork: https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster
@@ -22,7 +22,7 @@ dataset:
     
   output:
     file: gs://petrobras-jobs-pubsub/outputs/voo_enrich.csv
-    table: petro.gcs_bigquery
+    table: petro.dryrun4
     columns:
     - success
     - datatype

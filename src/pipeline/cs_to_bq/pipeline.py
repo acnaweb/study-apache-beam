@@ -52,7 +52,7 @@ class DhuoFlowUtils:
     def build_dataflow_options(cfg : DictConfig):
         return  {
             "project": cfg.gcp.project,
-            # "runner": "DataflowRunner",
+            "runner": "DataflowRunner",
             "region": cfg.gcp.dataflow.region,
             "staging_location": cfg.gcp.dataflow.staging_location,
             "temp_location": cfg.gcp.temp_location,
@@ -106,6 +106,30 @@ class DhuoFlow:
             pipelineOptions = PipelineOptions.from_dictionary(DhuoFlowUtils.build_dataflow_options(self.cfg))
         else:
             pipelineOptions = PipelineOptions(argc=None)    
+
+
+        import os
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '/home/ac/Projects/study-apache-beam/credentials/sa-petrobras@dhuodata.json'
+
+        pipeline_options = PipelineOptions(
+            job_name= self.cfg.job.name,
+            runner= "DataflowRunner" ,
+            region = "us-west1" ,
+            temp_location = f"gs://petrobras-jobs-pubsub/template/{self.cfg.job.name}" ,
+            # template_location = f"gs://petrobras-jobs-pubsub/template/{self.cfg.job.name}",
+            project = "dhuodata" ,
+            streaming = False,
+            subnetwork = "https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster",                        
+            requirements_file= "./requirements.txt",
+            options = [
+                # "--job_name", self.cfg.job.name,
+                "--worker_disk_type =pd-ssd" ,
+                "--worker_disk_size_gb=10" ,
+                "--worker_machine_type=n1-standard-1" ,
+                "--num_workers=1" ,
+                "--max_num_workers=3"
+            ]
+        )
             
         from google.oauth2 import service_account
         from google.cloud import storage
@@ -122,12 +146,18 @@ class DhuoFlow:
 
         # Note: Client.list_blobs requires at least package version 1.17.0.
         blobs = storage_client.list_blobs(bucket_name)
+        
         dt = datetime.date.today()
+        now = datetime.datetime.now()
+        dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
 
         # Substitua 'YOUR_PROJECT_ID', 'YOUR_INSTANCE_ID', e 'YOUR_TABLE_NAME' pelos seus valores
-        with beam.Pipeline(options = pipelineOptions) as p:
+        with beam.Pipeline(options = pipeline_options) as p:
 
-            path = 'gs://petrobras-teste/messages/partition=' + str(dt) + '/row1.json' #   2023-09-18/row1.json'
+            self.bucket = "petrobras-teste"
+            # path = f"gs://{self.bucket}/messages/partition={dt}/*.json" #   2023-09-18/row1.json'
+
+            path = 'gs://petrobras-teste/messages/partition=2023-09-21/17:22.78_row1.json'
 
             # path = f"gs://{bucket_name}/" + re.sub("\s+", "",txt.split(',')[-2])
             # with blob.open("r") as f:

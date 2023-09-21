@@ -3,7 +3,7 @@ import hydra
 import apache_beam as beam
 from apache_beam.options.pipeline_options import PipelineOptions
 from omegaconf import DictConfig, OmegaConf
-from statsd import StatsClient
+# from statsd import StatsClient
 
 # Imports the Cloud Logging client library
 import google.cloud.logging
@@ -70,11 +70,11 @@ class DhuoFlowUtils:
     @staticmethod
     def build_dataflow_options(cfg : DictConfig, use_dataflow):
         return  {
-            "job_name": cfg.job.name,
+            # "job_name": cfg.job.name,
             "project": cfg.gcp.project,
             "runner": "DataflowRunner" if use_dataflow else "DirectRunner",
             "region": "us-west1",
-            "staging_location": "gs://petrobras-jobs-pubsub/temp",
+            "staging_location": "gs://petrobras-jobs-pubsub/template",
             "temp_location": "gs://petrobras-jobs-pubsub/temp",
             "template_location": f"gs://petrobras-jobs-pubsub/template/{cfg.job.name}",
             "save_main_session": True,
@@ -87,7 +87,7 @@ class DhuoFlowUtils:
             # "sdk_container_image": "beam:latest"
             # "no_use_public_ips": True,
             # "requirements_file="/content/requirements.txt",
-            # "options": ["--worker_disk_type=pd-ssd" , "--worker_disk_size_gb=10" , "--worker_machine_type=n1-standard-1" , "--num_workers=1" ,"--max_num_workers=3"]
+            # "options": ["--job_name="+ cfg.job.name,"--worker_disk_type=pd-ssd" , "--worker_disk_size_gb=10" , "--worker_machine_type=n1-standard-1" , "--num_workers=1" ,"--max_num_workers=3"]
 
         }
     
@@ -98,23 +98,23 @@ class ReadFromPubSub(beam.DoFn):
         self.subscription = subscription
 
 
-    def setup(self):
-        host_statsd = "34.168.12.193"
-        self.statsClient = StatsClient(        
-            host=host_statsd, 
-            port=9125, 
-            prefix="statsd_dataflow"
-        )
+    # def setup(self):
+    #     host_statsd = "34.168.12.193"
+    #     self.statsClient = StatsClient(        
+    #         host=host_statsd, 
+    #         port=9125, 
+    #         prefix="statsd_dataflow"
+    #     )
 
 
-    def send_metric(self, metric):
-        msg = f"{METRIC_PREFIX}{metric}"
-        logging.info(msg)
-        self.statsClient.incr(msg)        
+    # def send_metric(self, metric):
+    #     msg = f"{METRIC_PREFIX}{metric}"
+    #     logging.info(msg)
+    #     self.statsClient.incr(msg)        
 
 
     def process(self, input):
-        self.send_metric(f"topic.{self.subscription}")
+        # self.send_metric(f"topic.{self.subscription}")
         output =  input | beam.io.ReadFromPubSub(subscription=f"{self.subscription}").with_output_types(bytes) 
         return output
     
@@ -127,25 +127,25 @@ class WriteToBigTable(beam.DoFn):
         self.table = table
 
 
-    def setup(self):
-        host_statsd = "34.168.12.193"
-        self.statsClient = StatsClient(        
-            host=host_statsd, 
-            port=9125, 
-            prefix="statsd_dataflow"
-        )
+    # def setup(self):
+    #     host_statsd = "34.168.12.193"
+    #     self.statsClient = StatsClient(        
+    #         host=host_statsd, 
+    #         port=9125, 
+    #         prefix="statsd_dataflow"
+    #     )
 
 
-    def send_metric(self, metric):
-        msg = f"{METRIC_PREFIX}{metric}"
-        logging.info(msg)
-        self.statsClient.incr(msg)        
+    # def send_metric(self, metric):
+    #     msg = f"{METRIC_PREFIX}{metric}"
+    #     logging.info(msg)
+    #     self.statsClient.incr(msg)        
 
 
     def process(self, input):
         from apache_beam.io.gcp.bigtableio import WriteToBigTable
 
-        self.send_metric(f"bigtable.{self.instance}.{self.table}")
+        # self.send_metric(f"bigtable.{self.instance}.{self.table}")
         output = input | WriteToBigTable( project_id=self.project, 
                                                      instance_id=self.instance, 
                                                      table_id=self.tabled)    
@@ -172,26 +172,26 @@ class CreateInvoiceDescriptionRowFn(beam.DoFn):
         self.subscription = subscription
 
 
-    def setup(self):
-        # host_statsd = "10.10.0.87"
-        host_statsd = "34.168.12.193"
+    # def setup(self):
+    #     # host_statsd = "10.10.0.87"
+    #     host_statsd = "34.168.12.193"
 
-        self.statsClient = StatsClient(        
-            host=host_statsd, 
-            port=9125, 
-            prefix="statsd_dataflow"
-        )
+    #     self.statsClient = StatsClient(        
+    #         host=host_statsd, 
+    #         port=9125, 
+    #         prefix="statsd_dataflow"
+    #     )
 
 
-    def send_metric(self, metric):
+    # def send_metric(self, metric):
 
-        msg = f"{METRIC_PREFIX}{metric}"
-        logging.info(msg)
-        self.statsClient.incr(msg)     
+    #     msg = f"{METRIC_PREFIX}{metric}"
+    #     logging.info(msg)
+    #     self.statsClient.incr(msg)     
 
-        msg = f"{METRIC_PREFIX}pubsub.{self.subscription}"
-        logging.info(msg)
-        self.statsClient.incr(msg)     
+    #     msg = f"{METRIC_PREFIX}pubsub.{self.subscription}"
+    #     logging.info(msg)
+    #     self.statsClient.incr(msg)     
 
 
 
@@ -202,7 +202,7 @@ class CreateInvoiceDescriptionRowFn(beam.DoFn):
         from google.cloud.bigtable import row
         
         try:
-            self.send_metric(f"bigtable.{self.table_id}")
+            # self.send_metric(f"bigtable.{self.table_id}")
 
             json_parsed = json_data.decode('utf-8').replace('\t', '').replace('\n', '').replace('\r', '')
             json_parsed = json.loads(json_parsed)
@@ -210,7 +210,10 @@ class CreateInvoiceDescriptionRowFn(beam.DoFn):
             dt = datetime.date.today()
             now = datetime.datetime.now()
             dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
-            with GcsIO().open(f"gs://{self.bucket}/messages/partition={dt}/{self.key}.json", 'w') as file:
+
+            # dthm =('%02d:%02d'%(now.minute,now.second,now.microsecond))
+
+            with GcsIO().open(f"gs://{self.bucket}/messages/partition={dt}/{dthm}_{self.key}.json", 'w') as file:
                 file.write(json.dumps(json_parsed).encode())            
 
             # Save message in processed folder in gcs bucket            
@@ -264,10 +267,33 @@ class DhuoFlow:
     def run(self) ->  None:
 
         # use Dataflow
-        use_dataflow = False        
+        use_dataflow = True        
         pipelineOptions = PipelineOptions.from_dictionary(DhuoFlowUtils.build_dataflow_options(self.cfg, use_dataflow))            
         
-        with beam.Pipeline(options=pipelineOptions) as p:
+        import os
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = '/home/ac/Projects/study-apache-beam/credentials/sa-petrobras@dhuodata.json'
+
+        pipeline_options = PipelineOptions(
+            job_name= self.cfg.job.name,
+            runner= "DataflowRunner" ,
+            region = "us-west1" ,
+            temp_location = f"gs://petrobras-jobs-pubsub/template/{self.cfg.job.name}" ,
+            # template_location = f"gs://petrobras-jobs-pubsub/template/{self.cfg.job.name}",
+            project = "dhuodata" ,
+            streaming = True,
+            subnetwork = "https://www.googleapis.com/compute/v1/projects/dhuodata/regions/us-west1/subnetworks/dhuodata-subnet-stg-cluster",                        
+            requirements_file= "./requirements.txt",
+            options = [
+                # "--job_name", self.cfg.job.name,
+                "--worker_disk_type =pd-ssd" ,
+                "--worker_disk_size_gb=10" ,
+                "--worker_machine_type=n1-standard-1" ,
+                "--num_workers=1" ,
+                "--max_num_workers=3"
+            ]
+        )
+
+        with beam.Pipeline(options=pipeline_options) as p:
             from apache_beam.io.gcp.bigtableio import WriteToBigTable
 
             # data =  p | 'Read from Pub/Sub' >>  beam.ParDo(ReadFromPubSub(self.cfg.gcp.pubsub.subscription))   

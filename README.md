@@ -120,10 +120,51 @@ Ações
 
 - Query no BT/BQ
 ```
-SELECT * FROM `dhuodata.petro.dry_run` LIMIT 1000
+BigQuery
+SELECT * FROM `dhuodata.petro.gcs_bigquery1` LIMIT 1000
+
+BigTable
+SELECT * FROM `dhuodata.petro.teste_1` LIMIT 1000
 ```
 - DataFlow 
     Grafo
     
+
+pb_to_bt
+1 - Mostrar a tabela no BigTable vazia dryrun4
+2 - Subir o job para o Dataflow (3 min) - make ps_to_bt
+3 - Mostrar a tabela no BigTable com bytes dryrun4
+
+
+cs_to_bq
+1 - Mostrar que a tabela no BigQuery não existe - petro.dryrun4
+2 - Subir o job para o Dataflow (3 min) - make cs_to_bq
+3 - Mostrar a tabela no BigQuery - petro.dryrun4
+SELECT * FROM `dhuodata.petro.dryrun4` LIMIT 1000
+
+CREATE EXTERNAL TABLE petro.bigtablerun4
+OPTIONS (
+  format = 'CLOUD_BIGTABLE',
+  uris = ['https://googleapis.com/bigtable/projects/dhuodata/instances/teste-api/tables/dryrun4'],
+  bigtable_options =
+    """
+    {
+      columnFamilies: [
+        {
+          "familyId": "input",
+          "type": "STRING",
+          "encoding": "BINARY"
+        }
+      ],
+      readRowkeyAsString: true
+    }
+    """
+);
+
+
+Resumo PUB -> BT -> BQ
+Próximo: Emílio 
+ 
+
 
 
