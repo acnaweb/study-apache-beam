@@ -130,6 +130,9 @@ SELECT * FROM `dhuodata.petro.teste_1` LIMIT 1000
     Grafo
     
 
+tópico: dry-run-integra
+projects/dhuodata/subscriptions/dry-run-integra-sub
+
 pb_to_bt
 1 - Mostrar a tabela no BigTable vazia dryrun4
 2 - Subir o job para o Dataflow (3 min) - make ps_to_bt

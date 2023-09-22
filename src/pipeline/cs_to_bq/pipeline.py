@@ -42,7 +42,8 @@ class DhuoFlowUtils:
     def save_bigquery(data, table_name, schema, gcs_temp_location):
         return data | "Write to Bigquery" >> beam.io.WriteToBigQuery(
                     table_name,
-                    schema=schema,
+                    #schema=schema,
+                    schema ='SCHEMA_AUTODETECT', 
                     write_disposition=beam.io.BigQueryDisposition.WRITE_APPEND,
                     create_disposition=beam.io.BigQueryDisposition.CREATE_IF_NEEDED,
                     custom_gcs_temp_location=gcs_temp_location
@@ -147,7 +148,7 @@ class DhuoFlow:
         # Note: Client.list_blobs requires at least package version 1.17.0.
         blobs = storage_client.list_blobs(bucket_name)
         
-        dt = datetime.date.today()
+        dt = str(datetime.date.today())
         now = datetime.datetime.now()
         dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
 
@@ -164,11 +165,13 @@ class DhuoFlow:
             #     texto = f.read()
             #     print(texto)
             #     lines  =  p  | 'Getdata' >> beam.Create([texto])
-                    
-                        
+                                        
+            # TODO nome do job
+            data = p |'Read from GCS' >> beam.io.ReadFromText(f'gs://petrobras-teste/messages/partition={dt}/*.json')
+
             # data = DhuoFlowUtils.load_file(p, path)  
 
-            data = p | "Load file " >> beam.io.ReadFromText(path)                    
+            # data = p | "Load file " >> beam.io.ReadFromText(path)                    
             
             # data |  beam.Map(print)           
             
@@ -179,6 +182,8 @@ class DhuoFlow:
             data_parsed = data | "PARSE JSON" >> beam.Map(json.loads)
 
             data_x = data_parsed | "Convert " >> beam.Map(transf_to_json)
+
+            # data_x | beam.Map(print)
                         
             DhuoFlowUtils.save_bigquery(data_x, self.table_name, self.table_schema, self.gcp_temp_location)
 

@@ -1,5 +1,5 @@
 job:  
-  name: cs-to-bigquery-dryrun5
+  name: cs-to-bigquery-dryrun4
 
 use_dataflow: True
 
@@ -22,7 +22,7 @@ dataset:
     
   output:
     file: gs://petrobras-jobs-pubsub/outputs/voo_enrich.csv
-    table: petro.dryrun5
+    table: petro.teste_bigquery
     columns:
     - success
     - datatype

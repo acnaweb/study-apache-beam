@@ -207,12 +207,14 @@ class CreateInvoiceDescriptionRowFn(beam.DoFn):
             json_parsed = json_data.decode('utf-8').replace('\t', '').replace('\n', '').replace('\r', '')
             json_parsed = json.loads(json_parsed)
 
-            dt = datetime.date.today()
+            dt = str(datetime.date.today())
             now = datetime.datetime.now()
             dthm =('%02d:%02d.%d'%(now.minute,now.second,now.microsecond))[:-4]
 
             # dthm =('%02d:%02d'%(now.minute,now.second,now.microsecond))
 
+            # TODO nome do job
+            
             with GcsIO().open(f"gs://{self.bucket}/messages/partition={dt}/{dthm}_{self.key}.json", 'w') as file:
                 file.write(json.dumps(json_parsed).encode())            
 
@@ -306,6 +308,7 @@ class DhuoFlow:
                                         self.cfg.gcp.destination.key,
                                         self.cfg.gcp.destination.familia_columns,
                                         self.cfg.gcp.pubsub.subscription))
+
             
             # # data_as_row | 'Write to Bigtable' >> beam.ParDo(WriteToBigTable(self.cfg.gcp.project,
             # #                                                                 self.cfg.gcp.destination.instance,

@@ -1,5 +1,5 @@
 job:  
-  name: pubsub-to-bigtable-cs-dryrun5
+  name: pubsub-to-bigtable-cs-dryrun4
 
 gcp:
   project: dhuodata
@@ -7,12 +7,12 @@ gcp:
     streaming: True
     max_num_workers: 2
   pubsub:
-    topic: projects/dhuodata/topics/dry-run-integra
-    subscription: projects/dhuodata/subscriptions/dry-run-integra-sub
+    topic: projects/dhuodata/topics/input-messages
+    subscription: projects/dhuodata/subscriptions/input-messages-sub
                   
   destination:
     instance: "teste-api"
-    table: "dryrun5"
+    table: "dryrun4"
     key: "row1"
     familia_columns: "input"
 
