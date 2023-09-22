@@ -113,38 +113,6 @@ POST /v1b3/projects/${{PROJECT_ID}}/locations/${{REGION}}/templates:launch?gcsPa
 
 #### Apresentação
 
-- Ingestão - PS -> BT -> BQ
-- Job pronto
-Ações
-- Envio de msg pelo Tópico
-
-- Query no BT/BQ
-```
-BigQuery
-SELECT * FROM `dhuodata.petro.gcs_bigquery1` LIMIT 1000
-
-BigTable
-SELECT * FROM `dhuodata.petro.teste_1` LIMIT 1000
-```
-- DataFlow 
-    Grafo
-    
-
-tópico: dry-run-integra
-projects/dhuodata/subscriptions/dry-run-integra-sub
-
-pb_to_bt
-1 - Mostrar a tabela no BigTable vazia dryrun4
-2 - Subir o job para o Dataflow (3 min) - make ps_to_bt
-3 - Mostrar a tabela no BigTable com bytes dryrun4
-
-
-cs_to_bq
-1 - Mostrar que a tabela no BigQuery não existe - petro.dryrun4
-2 - Subir o job para o Dataflow (3 min) - make cs_to_bq
-3 - Mostrar a tabela no BigQuery - petro.dryrun4
-SELECT * FROM `dhuodata.petro.dryrun4` LIMIT 1000
-
 CREATE EXTERNAL TABLE petro.bigtablerun4
 OPTIONS (
   format = 'CLOUD_BIGTABLE',
@@ -165,9 +133,29 @@ OPTIONS (
 );
 
 
+************************************************************************
+Tópico: projects/dhuodata/topics/dry-run-integra
+Subscription: projects/dhuodata/subscriptions/dry-run-integra-sub
+Bigtable: teste-api.dryrun5  -> BigQuery (alias): petro.bigtablerun5
+Cloud Storage: gs://petrobras-teste
+BigQuery: petro.dryrun5
+
+************************************************************************
+A - pb_to_bt
+
+1 - Mostrar a tabela no BigTable vazia teste-api.dryrun5
+2 - Subir o job para o Dataflow (3 min) - make ps_to_bt
+3 - Mostrar a tabela no BigTable com bytes teste-api.dryrun5
+SELECT * FROM  dhuodata.petro.bigtablerun5
+
+************************************************************************
+cs_to_bq
+1 - Mostrar que a tabela no BigQuery não existe - petro.dryrun5
+2 - Subir o job para o Dataflow (3 min) - make cs_to_bq
+3 - Mostrar a tabela no BigQuery - petro.dryrun5
+SELECT * FROM `dhuodata.petro.dryrun5`
+
+************************************************************************
 Resumo PUB -> BT -> BQ
 Próximo: Emílio 
  
-
-
-
