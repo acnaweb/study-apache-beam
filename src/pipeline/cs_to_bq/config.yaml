@@ -1,8 +1,6 @@
 job:  
   name: cs-to-bigquery-dryrun5
 
-use_dataflow: True
-
 gcp:
   project: dhuodata
   temp_location: gs://petrobras-jobs-pubsub/temp
