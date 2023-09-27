@@ -9,6 +9,7 @@ gs://petrobras-jobs-pubsub/jobs
 
 #### Config.yaml 
 
+```
 job:  
   name: stream-ingestão-demo # nome do job no DataFlow (sem espaços ou caracteres especiais)
   type: STREAM | BATCH   
@@ -35,5 +36,5 @@ gcp:
   bigquery: # Se job.type = BATCH
     table: bigtable_dataset.table_name
     # Nota: o schema será inferido
-
+```
 
